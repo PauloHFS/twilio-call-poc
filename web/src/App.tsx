@@ -1,6 +1,6 @@
 import { useLayoutEffect, useRef, useState } from 'react';
 import './App.css';
-import { createLocalVideoTrack, connect, Room } from 'twilio-video';
+import { createLocalVideoTrack, connect, Room, Track } from 'twilio-video';
 import axios from 'axios';
 
 function App() {
@@ -41,12 +41,14 @@ function App() {
             console.log(`Participant "${participant.identity}" connected`);
 
             participant.tracks.forEach(publication => {
-              if (publication.isSubscribed) {
+              if (publication.isSubscribed && publication.track) {
+                // @ts-ignore
                 publication.track.attach(remoteVideoRef.current);
               }
             });
 
             participant.on('trackSubscribed', track => {
+              // @ts-ignore
               track.attach(remoteVideoRef.current);
             });
           });
@@ -69,12 +71,14 @@ function App() {
           id="name"
           type="text"
           value={name}
+          // @ts-ignore
           onChange={e => setName(e.target.value)}
         />
         <label htmlFor="roomName">Room Name</label>
         <input
           id="roomName"
           type="text"
+          // @ts-ignore
           onChange={e => setRoomName(e.target.value)}
           value={roomName}
         />
@@ -83,7 +87,9 @@ function App() {
           Disconnect
         </button>
       </div>
+      {/* @ts-ignore */}
       <video ref={localVideoRef} />
+      {/* @ts-ignore */}
       <video ref={remoteVideoRef} />
     </div>
   );
