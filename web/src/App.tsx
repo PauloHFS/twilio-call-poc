@@ -22,8 +22,8 @@ function App() {
 
   const handleConnect = () => {
     axios
-      // .post('https://twilio-call-poc.herokuapp.com/token', {
-      .post('http://localhost:3333/token', {
+      .post('https://twilio-call-poc.herokuapp.com/token', {
+        // .post('http://localhost:3333/token', {
         roomName: roomName,
         identity: name,
       })
